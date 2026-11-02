@@ -16,7 +16,6 @@
       s.parentNode.insertBefore(t,s)}(window, document,'script',
       'https://connect.facebook.net/en_US/fbevents.js');
       
-      // ⚠️ استبدل رقم البيكسل الخاص بك هنا بدل الرقم المكتوب
       var YOUR_PIXEL_ID = '1130382356394829'; 
       
       if(YOUR_PIXEL_ID && YOUR_PIXEL_ID !== 'YOUR_PIXEL_ID_HERE') {
@@ -32,7 +31,7 @@
     </script>
     <noscript>
       <img height="1" width="1" style="display:none"
-           src="https://www.facebook.com/tr?id=YOUR_PIXEL_ID_HERE&ev=PageView&noscript=1"/>
+           src="https://www.facebook.com/tr?id=1130382356394829&ev=PageView&noscript=1"/>
     </noscript>
     <!-- End Meta Pixel Code -->
 
@@ -82,7 +81,7 @@
 
     <!-- TOP ANNOUNCEMENT BAR -->
     <div class="bg-gradient-to-r from-amber-600 via-amber-500 to-amber-600 text-slate-950 font-extrabold py-2 px-4 text-center text-xs sm:text-sm tracking-wide shadow-inner">
-         التوصيل متوفر لجميع الولايات الـ 58 والدفع نقداً عند استلام المنتج 
+        ✨ التوصيل متوفر لجميع الولايات الـ 58 والدفع نقداً عند استلام المنتج ✨
     </div>
 
     <!-- HEADER -->
@@ -145,11 +144,11 @@
                 </div>
 
                 <div class="pt-4">
-                <a href="#order" onclick="trackCheckout()" class="pulse-btn bg-gradient-to-r from-amber-500 via-amber-400 to-amber-500 text-slate-950 font-black px-8 py-4 rounded-2xl shadow-xl shadow-amber-500/20 inline-flex items-center gap-3 text-base">
-                    <span>اطلب الآن - 29000 د.ج</span>
-                    <i class="fa-solid fa-arrow-left"></i>
-                </a>
-            </div>
+                    <a href="#order" onclick="trackCheckout()" class="pulse-btn bg-gradient-to-r from-amber-500 via-amber-400 to-amber-500 text-slate-950 font-black px-8 py-4 rounded-2xl shadow-xl shadow-amber-500/20 inline-flex items-center gap-3 text-base">
+                        <span>اطلب الآن - 29000 د.ج</span>
+                        <i class="fa-solid fa-arrow-left"></i>
+                    </a>
+                </div>
             </div>
 
             <!-- Product Image -->
@@ -169,7 +168,7 @@
                     </div>
                 </div>
 
-                <!-- Gallery Thumbnails (Only the 3 exact provided image URLs) -->
+                <!-- Gallery Thumbnails -->
                 <div class="grid grid-cols-3 gap-2 w-full max-w-md mt-4">
                     <button type="button" onclick="setHeroImage(this, 'الكرة الأرضية الذهبية العائمة فوق قاعدة الكروم')" data-src="https://s.alicdn.com/@sc04/kf/H09e77588d3c0478b9ab71016649630beJ.jpg_960x960q80.jpg" class="thumb p-1 rounded-2xl border-2 bg-[#121620] border-amber-400 shadow-md flex flex-col items-center gap-1">
                         <img src="https://s.alicdn.com/@sc04/kf/H09e77588d3c0478b9ab71016649630beJ.jpg_960x960q80.jpg" alt="صورة 1" loading="lazy" class="w-full aspect-square object-cover rounded-xl">
@@ -191,7 +190,7 @@
         </div>
     </section>
 
-    <!-- SECTION: FEATURES & WHY CHOOSE US -->
+    <!-- SECTION: FEATURES -->
     <section class="py-16 bg-[#0c0f14] border-y border-slate-800/80">
         <div class="max-w-6xl mx-auto px-4">
             <div class="text-center max-w-2xl mx-auto mb-12">
@@ -310,19 +309,15 @@
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div>
                             <label class="block text-xs font-bold text-slate-300 mb-1.5">الولاية (58 ولاية) *</label>
-                            <select id="wilaya" required onchange="calculateTotal()" class="w-full bg-[#090b0e] border border-slate-700 focus:border-amber-400 rounded-xl px-4 py-3 text-sm text-white focus:outline-none">
-                                <!-- Generated JS Wilayas -->
+                            <select id="wilaya" required onchange="onWilayaChange()" class="w-full bg-[#090b0e] border border-slate-700 focus:border-amber-400 rounded-xl px-4 py-3 text-sm text-white focus:outline-none">
                             </select>
                         </div>
                         <div>
                             <label class="block text-xs font-bold text-slate-300 mb-1.5">البلدية *</label>
-                            <input type="text" id="commune" required placeholder="اسم البلدية" class="w-full bg-[#090b0e] border border-slate-700 focus:border-amber-400 rounded-xl px-4 py-3 text-sm text-white focus:outline-none">
+                            <select id="commune" required class="w-full bg-[#090b0e] border border-slate-700 focus:border-amber-400 rounded-xl px-4 py-3 text-sm text-white focus:outline-none">
+                                <option value="">اختر البلدية</option>
+                            </select>
                         </div>
-                    </div>
-
-                    <div>
-                        <label class="block text-xs font-bold text-slate-300 mb-1.5">العنوان الكامل</label>
-                        <input type="text" id="address" placeholder="الحي / الشارع للاستلام" class="w-full bg-[#090b0e] border border-slate-700 focus:border-amber-400 rounded-xl px-4 py-3 text-sm text-white focus:outline-none">
                     </div>
 
                     <!-- Delivery Options -->
@@ -399,7 +394,6 @@
 
     <!-- JAVASCRIPT -->
     <script>
-        // Function to switch main image from thumbnails
         function setHeroImage(btnEl, captionText) {
             const newSrc = btnEl.getAttribute('data-src');
             const heroImg = document.getElementById('hero-img');
@@ -412,7 +406,6 @@
                 heroCaption.innerText = 'Bright DZ - ' + captionText;
             }
 
-            // Update border styles for thumbnails
             document.querySelectorAll('.thumb').forEach(btn => {
                 btn.classList.remove('border-amber-400', 'opacity-100');
                 btn.classList.add('border-slate-800', 'opacity-70');
@@ -423,82 +416,106 @@
         }
 
         const wilayasData = [
-            { code: "1", name: "01 - أدرار", home: 900, desk: 600 },
-            { code: "2", name: "02 - الشلف", home: 600, desk: 400 },
-            { code: "3", name: "03 - الأغواط", home: 700, desk: 500 },
-            { code: "4", name: "04 - أم البواقي", home: 600, desk: 400 },
-            { code: "5", name: "05 - باتنة", home: 600, desk: 400 },
-            { code: "6", name: "06 - بجاية", home: 600, desk: 400 },
-            { code: "7", name: "07 - بسكرة", home: 700, desk: 500 },
-            { code: "8", name: "08 - بشار", home: 800, desk: 600 },
-            { code: "9", name: "09 - البليدة", home: 500, desk: 300 },
-            { code: "10", name: "10 - البويرة", home: 600, desk: 400 },
-            { code: "11", name: "11 - تمنراست", home: 1100, desk: 800 },
-            { code: "12", name: "12 - تبسة", home: 600, desk: 400 },
-            { code: "13", name: "13 - تلمسان", home: 600, desk: 400 },
-            { code: "14", name: "14 - تيارت", home: 600, desk: 400 },
-            { code: "15", name: "15 - تيزي وزو", home: 500, desk: 300 },
-            { code: "16", name: "16 - الجزائر العاصمة", home: 400, desk: 250 },
-            { code: "17", name: "17 - الجلفة", home: 700, desk: 500 },
-            { code: "18", name: "18 - جيجل", home: 600, desk: 400 },
-            { code: "19", name: "19 - سطيف", home: 600, desk: 400 },
-            { code: "20", name: "20 - سعيدة", home: 600, desk: 400 },
-            { code: "21", name: "21 - سكيكدة", home: 600, desk: 400 },
-            { code: "22", name: "22 - سيدي بلعباس", home: 600, desk: 400 },
-            { code: "23", name: "23 - عنابة", home: 600, desk: 400 },
-            { code: "24", name: "24 - قالمة", home: 600, desk: 400 },
-            { code: "25", name: "25 - قسنطينة", home: 600, desk: 400 },
-            { code: "26", name: "26 - المدية", home: 600, desk: 400 },
-            { code: "27", name: "27 - مستغانم", home: 600, desk: 400 },
-            { code: "28", name: "28 - المسيلة", home: 600, desk: 400 },
-            { code: "29", name: "29 - معسكر", home: 600, desk: 400 },
-            { code: "30", name: "30 - ورقلة", home: 800, desk: 500 },
-            { code: "31", name: "31 - وهران", home: 600, desk: 400 },
-            { code: "32", name: "32 - البيض", home: 800, desk: 500 },
-            { code: "33", name: "33 - إليزي", home: 1100, desk: 800 },
-            { code: "34", name: "34 - برج بوعريريج", home: 600, desk: 400 },
-            { code: "35", name: "35 - بومرداس", home: 500, desk: 300 },
-            { code: "36", name: "36 - الطارف", home: 600, desk: 400 },
-            { code: "37", name: "37 - تندوف", home: 1100, desk: 800 },
-            { code: "38", name: "38 - تسمسيلت", home: 600, desk: 400 },
-            { code: "39", name: "39 - الوادي", home: 800, desk: 500 },
-            { code: "40", name: "40 - خنشلة", home: 600, desk: 400 },
-            { code: "41", name: "41 - سوق أهراس", home: 600, desk: 400 },
-            { code: "42", name: "42 - تيبازة", home: 500, desk: 300 },
-            { code: "43", name: "43 - ميلة", home: 600, desk: 400 },
-            { code: "44", name: "44 - عين الدفلى", home: 600, desk: 400 },
-            { code: "45", name: "45 - النعامة", home: 800, desk: 500 },
-            { code: "46", name: "46 - عين تموشنت", home: 600, desk: 400 },
-            { code: "47", name: "47 - غرداية", home: 800, desk: 500 },
-            { code: "48", name: "48 - غليزان", home: 600, desk: 400 },
-            { code: "49", name: "49 - المغير", home: 800, desk: 500 },
-            { code: "50", name: "50 - المنيعة", home: 900, desk: 600 },
-            { code: "51", name: "51 - أولاد جلال", home: 800, desk: 500 },
-            { code: "52", name: "52 - برج باجي مختار", home: 1200, desk: 900 },
-            { code: "53", name: "53 - بني عباس", home: 900, desk: 600 },
-            { code: "54", name: "54 - تيميمون", home: 900, desk: 600 },
-            { code: "55", name: "55 - تقرت", home: 800, desk: 500 },
-            { code: "56", name: "56 - جانت", home: 1200, desk: 900 },
-            { code: "57", name: "57 - عين صالح", home: 1100, desk: 800 },
-            { code: "58", name: "58 - عين قزام", home: 1200, desk: 900 }
+            { code: "1", name: "01 - أدرار", home: 900, desk: 600, communes: ["أدرار", "تامست", "شروين", "رقان", "أولف", "تيميمون", "أوقروت"] },
+            { code: "2", name: "02 - الشلف", home: 600, desk: 400, communes: ["الشلف", "تنس", "أبو الحسن", "أولاد فارس", "تاوقريت", "عين مران"] },
+            { code: "3", name: "03 - الأغواط", home: 700, desk: 500, communes: ["الأغواط", "أفلو", "حاسي الرمل", "قصر الحيران", "عين ماضي"] },
+            { code: "4", name: "04 - أم البواقي", home: 600, desk: 400, communes: ["أم البواقي", "عين البيضاء", "عين مليلة", "فكيرينة", "سيقوس"] },
+            { code: "5", name: "05 - باتنة", home: 600, desk: 400, communes: ["باتنة", "بريكة", "عين توتة", "أريس", "مروانة", "تازولت"] },
+            { code: "6", name: "06 - بجاية", home: 600, desk: 400, communes: ["بجاية", "أميزور", "أقبو", "القصر", "تيشي", "خراطة"] },
+            { code: "7", name: "07 - بسكرة", home: 700, desk: 500, communes: ["بسكرة", "طولقة", "سيدي عقبة", "أولاد جلال", "زريبة الوادي"] },
+            { code: "8", name: "08 - بشار", home: 800, desk: 600, communes: ["بشار", "القنادسة", "تاغيت", "العبادلة", "بني عباس"] },
+            { code: "9", name: "09 - البليدة", home: 500, desk: 300, communes: ["البليدة", "بوفاريك", "العفرون", "موزاية", "أولاد يعيش", "الصومعة"] },
+            { code: "10", name: "10 - البويرة", home: 600, desk: 400, communes: ["البويرة", "الأخضرية", "سور الغزلان", "عين بسام", "مشدالة"] },
+            { code: "11", name: "11 - تمنراست", home: 1100, desk: 800, communes: ["تمنراست", "عين صالح", "أين أ his", "تاظروك"] },
+            { code: "12", name: "12 - تبسة", home: 600, desk: 400, communes: ["تبسة", "الشريعة", "الونزة", "العوينات", "بئر العاتر"] },
+            { code: "13", name: "13 - تلمسان", home: 600, desk: 400, communes: ["تلمسان", "منصورة", "سبدو", "مغنية", "الغزوات", "الحناية"] },
+            { code: "14", name: "14 - تيارت", home: 600, desk: 400, communes: ["تيارت", "السوقر", "فرندة", "قصر الشلالة", "مهدية"] },
+            { code: "15", name: "15 - تيزي وزو", home: 500, desk: 300, communes: ["تيزي وزو", "أزازقة", "ذراع بن خدة", "واضية", "عين الحمام", "تزي غنيف"] },
+            { code: "16", name: "16 - الجزائر العاصمة", home: 400, desk: 250, communes: ["الجزائر الوسطى", "باب الوادي", "سيدي امحمد", "الأبيار", "حيدرة", "بن عكنون", "الشراقة", "دالي إبراهيم", "الدرارية", "بئر مراد رايس", "بئر خادم", "القبة", "الحراش", "باب الزوار", "الدار البيضاء", "الرويبة", "زرالدة", "عين البنيان", "الرغاية", "البرج الكيفان", "الكاليتوس", "براقي", "باش جراح", "المقرية", "المرادية", "بوزريعة", "بني المسوس", "السحاولة", "الخرايسية", "العاشور"] },
+            { code: "17", name: "17 - الجلفة", home: 700, desk: 500, communes: ["الجلفة", "حاسي بحبح", "عين وسارة", "مسعد", "الإدريسية"] },
+            { code: "18", name: "18 - جيجل", home: 600, desk: 400, communes: ["جيجل", "العوانة", "زيامة منصورية", "الطاهير", "الميلية"] },
+            { code: "19", name: "19 - سطيف", home: 600, desk: 400, communes: ["سطيف", "العلمة", "عين أرنات", "عين ولمان", "بوقاعة", "عين الكبيرة"] },
+            { code: "20", name: "20 - سعيدة", home: 600, desk: 400, communes: ["سعيدة", "عين الحجر", "يوب", "الحساسنة", "أولاد خالد"] },
+            { code: "21", name: "21 - سكيكدة", home: 600, desk: 400, communes: ["سكيكدة", "الحروش", "عزابة", "تمالوس", "قلعة بوسطورة"] },
+            { code: "22", name: "22 - سيدي بلعباس", home: 600, desk: 400, communes: ["سيدي بلعباس", "تلاغ", "سفيزف", "ابن باديس", "سيدي علي بن يوب"] },
+            { code: "23", name: "23 - عنابة", home: 600, desk: 400, communes: ["عنابة", "البوني", "الحجار", "برحال", "عين الباردة"] },
+            { code: "24", name: "24 - قالمة", home: 600, desk: 400, communes: ["قالمة", "وادي الزناتي", "بوشقوف", "المجاهدين", "عين مخلوف"] },
+            { code: "25", name: "25 - قسنطينة", home: 600, desk: 400, communes: ["قسنطينة", "الخروب", "عين سمارة", "زيغود يوسف", "حامة بوزيان", "أولاد رحمون"] },
+            { code: "26", name: "26 - المدية", home: 600, desk: 400, communes: ["المدية", "البرواقية", "قصر البخاري", "تابلاط", "عزيز"] },
+            { code: "27", name: "27 - مستغانم", home: 600, desk: 400, communes: ["مستغانم", "عين تادلس", "سيدي علي", "حاسي مُمش", "مزبغران"] },
+            { code: "28", name: "28 - المسيلة", home: 600, desk: 400, communes: ["المسيلة", "بوسعادة", "سيدي عيسى", "مقرة", "عين الملح"] },
+            { code: "29", name: "29 - معسكر", home: 600, desk: 400, communes: ["معسكر", "سيق", "المحمدية", "غريس", "تيغنيف"] },
+            { code: "30", name: "30 - ورقلة", home: 800, desk: 500, communes: ["ورقلة", "تقرت", "حاسي مسعود", "الرويسات", "الطيبات"] },
+            { code: "31", name: "31 - وهران", home: 600, desk: 400, communes: ["وهران", "بئر الجير", "السانية", "أرزيو", "عين الترك", "قديل", "وادي تليلات"] },
+            { code: "32", name: "32 - البيض", home: 800, desk: 500, communes: ["البيض", "الأبيض سيدي الشيخ", "بوقطب", "بريزينة"] },
+            { code: "33", name: "33 - إليزي", home: 1100, desk: 800, communes: ["إليزي", "جانت", "إن أميناس"] },
+            { code: "34", name: "34 - برج بوعريريج", home: 600, desk: 400, communes: ["برج بوعريريج", "راس الوادي", "مجانة", "برج غدير", "المنصورة"] },
+            { code: "35", name: "35 - بومرداس", home: 500, desk: 300, communes: ["بومرداس", "بودواو", "برج منايل", "دلس", "خميس الخشنة", "ثنية"] },
+            { code: "36", name: "36 - الطارف", home: 600, desk: 400, communes: ["الطارف", "القالة", "بوثلجة", "الذرعان", "بن مهيدي"] },
+            { code: "37", name: "37 - تندوف", home: 1100, desk: 800, communes: ["تندوف", "أم العسل"] },
+            { code: "38", name: "38 - تسمسيلت", home: 600, desk: 400, communes: ["تسمسيلت", "ثنية الأحد", "لرجام", "برج بونعامة"] },
+            { code: "39", name: "39 - الوادي", home: 800, desk: 500, communes: ["الوادي", "جامعة", "المغير", "قمار", "الدبيلة"] },
+            { code: "40", name: "40 - خنشلة", home: 600, desk: 400, communes: ["خنشلة", "قايس", "ششار", "محمل", "أولاد رشاش"] },
+            { code: "41", name: "41 - سوق أهراس", home: 600, desk: 400, communes: ["سوق أهراس", "سدراتة", "مداوروش", "تاورة"] },
+            { code: "42", name: "42 - تيبازة", home: 500, desk: 300, communes: ["تيبازة", "القليعة", "شرشال", "بوسماعيل", "فوكة", "حجوط"] },
+            { code: "43", name: "43 - ميلة", home: 600, desk: 400, communes: ["ميلة", "شلغوم العيد", "تاجنانت", "فرجيوة", "القرارم قوقة"] },
+            { code: "44", name: "44 - عين الدفلى", home: 600, desk: 400, communes: ["عين الدفلى", "خميس مليانة", "مليانة", "العطاف", "جندل"] },
+            { code: "45", name: "45 - النعامة", home: 800, desk: 500, communes: ["النعامة", "مشرية", "عين الصفراء", "عسلة"] },
+            { code: "46", name: "46 - عين تموشنت", home: 600, desk: 400, communes: ["عين تموشنت", "بني صاف", "حمام بوحجر", "المالح"] },
+            { code: "47", name: "47 - غرداية", home: 800, desk: 500, communes: ["غرداية", "القرارة", "متليلي", "بني يزقن", "زلفانة"] },
+            { code: "48", name: "48 - غليزان", home: 600, desk: 400, communes: ["غليزان", "وادي ارهيو", "مازونة", "زمورة", "سيدي خطاب"] },
+            { code: "49", name: "49 - المغير", home: 800, desk: 500, communes: ["المغير", "جامعة", "سيدي خليل", "أم الطيور"] },
+            { code: "50", name: "50 - المنيعة", home: 900, desk: 600, communes: ["المنيعة", "حاسي القارة"] },
+            { code: "51", name: "51 - أولاد جلال", home: 800, desk: 500, communes: ["أولاد جلال", "سيدي خالد", "البسكرة"] },
+            { code: "52", name: "52 - برج باجي مختار", home: 1200, desk: 900, communes: ["برج باجي مختار", "تيمياوين"] },
+            { code: "53", name: "53 - بني عباس", home: 900, desk: 600, communes: ["بني عباس", "كرزاز", "الواتة"] },
+            { code: "54", name: "54 - تيميمون", home: 900, desk: 600, communes: ["تيميمون", "أوقروت", "طلمين"] },
+            { code: "55", name: "55 - تقرت", home: 800, desk: 500, communes: ["تقرت", "تماسين", "النزلة", "بلدة عمر"] },
+            { code: "56", name: "56 - جانت", home: 1200, desk: 900, communes: ["جانت", "برج الحواس"] },
+            { code: "57", name: "57 - عين صالح", home: 1100, desk: 800, communes: ["عين صالح", "فقارة الزاوية"] },
+            { code: "58", name: "58 - عين قزام", home: 1200, desk: 900, communes: ["عين قزام", "تني Zouane"] }
         ];
 
         let basePrice = 29000;
         let currentQty = 1;
         let deliveryType = 'home';
 
-        // Initialize Wilayas
         window.onload = function() {
-            const select = document.getElementById('wilaya');
+            const selectWilaya = document.getElementById('wilaya');
             wilayasData.forEach(w => {
                 const opt = document.createElement('option');
                 opt.value = w.code;
                 opt.innerText = w.name;
                 if(w.code === "16") opt.selected = true;
-                select.appendChild(opt);
+                selectWilaya.appendChild(opt);
             });
-            calculateTotal();
+            onWilayaChange();
         };
+
+        function onWilayaChange() {
+            updateCommunes();
+            calculateTotal();
+        }
+
+        function updateCommunes() {
+            const code = document.getElementById('wilaya').value || "16";
+            const wObj = wilayasData.find(w => w.code === code) || wilayasData[15];
+            const communeSelect = document.getElementById('commune');
+            
+            communeSelect.innerHTML = '<option value="">اختر البلدية</option>';
+            
+            if (wObj && wObj.communes) {
+                wObj.communes.forEach(c => {
+                    const opt = document.createElement('option');
+                    opt.value = c;
+                    opt.innerText = c;
+                    communeSelect.appendChild(opt);
+                });
+                if (wObj.communes.length > 0) {
+                    communeSelect.selectedIndex = 1; // اختيار أول بلدية تلقائياً
+                }
+            }
+        }
 
         function setDeliveryType(type) {
             deliveryType = type;
@@ -540,7 +557,12 @@
                 return;
             }
 
-            // رابط Google Apps Script الخاص بك المباشر
+            const communeVal = document.getElementById('commune').value;
+            if (!communeVal) {
+                alert("يرجى اختيار البلدية");
+                return;
+            }
+
             const webhookUrl = "https://script.google.com/macros/s/AKfycbyPDPLBKPpPEBmM7AhAp9yCB-32bu83fnMq-j_Po9fArAa1ANelR82L_CjA6BiovNSXCg/exec";
 
             const submitBtn = document.getElementById('submit-btn');
@@ -556,8 +578,8 @@
                 fullname: document.getElementById('fullname').value,
                 phone: phone,
                 wilaya: wObj ? wObj.name : code,
-                commune: document.getElementById('commune').value,
-                address: document.getElementById('address').value || 'غير محدد',
+                commune: communeVal,
+                address: communeVal, // تم استبدال العنوان الكامل باسم البلدية لتطابق الأعمدة
                 deliveryType: deliveryType === 'home' ? 'توصيل للمنزل' : 'استلام من المكتب',
                 quantity: currentQty,
                 totalAmount: document.getElementById('grand-total').innerText,
@@ -578,7 +600,6 @@
             }
 
             setTimeout(() => {
-                // تتبع عملية الشراء في Facebook Pixel (Purchase Event)
                 if (typeof fbq === 'function') {
                     fbq('track', 'Purchase', {
                         value: (basePrice * currentQty),
@@ -607,7 +628,7 @@
             document.getElementById('submit-btn').disabled = false;
             currentQty = 1;
             document.getElementById('qty-display').innerText = 1;
-            calculateTotal();
+            onWilayaChange();
         }
     </script>
 </body>
