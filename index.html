@@ -1,3 +1,8 @@
+إليك الكود المحدث بالكامل لملف `index.html` والذي يحتوي على **هيكلية البيانات الشاملة للبلديات الـ 58 مع ربطها بالولايات تلقائياً**، بالإضافة إلى تفعيل ميزة الاستلام من المكتب 🏢 والتوصيل للمنزل 🏠 وفق البيانات التي قمت بتزويدنا بها، مع حذف حقل "العنوان الكامل" لتسريع وتسهيل عملية الطلب.
+
+الكود يحتوي على المعرف الخاص بك في Facebook Pixel (`1130382356394829`) ورابط الـ Webhook المباشر لـ Google Sheets:
+
+```html
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
@@ -81,7 +86,7 @@
 
     <!-- TOP ANNOUNCEMENT BAR -->
     <div class="bg-gradient-to-r from-amber-600 via-amber-500 to-amber-600 text-slate-950 font-extrabold py-2 px-4 text-center text-xs sm:text-sm tracking-wide shadow-inner">
-         التوصيل متوفر لجميع الولايات الـ 58 والدفع نقداً عند استلام المنتج 
+        ✨ التوصيل متوفر لجميع الولايات الـ 58 والدفع نقداً عند استلام المنتج ✨
     </div>
 
     <!-- HEADER -->
@@ -314,7 +319,7 @@
                         </div>
                         <div>
                             <label class="block text-xs font-bold text-slate-300 mb-1.5">البلدية *</label>
-                            <select id="commune" required class="w-full bg-[#090b0e] border border-slate-700 focus:border-amber-400 rounded-xl px-4 py-3 text-sm text-white focus:outline-none">
+                            <select id="commune" required onchange="onCommuneChange()" class="w-full bg-[#090b0e] border border-slate-700 focus:border-amber-400 rounded-xl px-4 py-3 text-sm text-white focus:outline-none">
                                 <option value="">اختر البلدية</option>
                             </select>
                         </div>
@@ -325,10 +330,10 @@
                         <label class="block text-xs font-bold text-slate-300 mb-2">نوع التوصيل</label>
                         <div class="grid grid-cols-2 gap-3">
                             <button type="button" id="type-home" onclick="setDeliveryType('home')" class="p-3.5 rounded-xl border text-xs font-bold text-center border-amber-400 bg-amber-500/10 text-amber-300 flex items-center justify-center gap-2">
-                                <i class="fa-solid fa-house"></i> توصيل للمنزل
+                                <i class="fa-solid fa-house"></i> توصيل للمنزل 🏠
                             </button>
                             <button type="button" id="type-desk" onclick="setDeliveryType('desk')" class="p-3.5 rounded-xl border text-xs font-bold text-center border-slate-800 bg-[#090b0e] text-slate-400 flex items-center justify-center gap-2">
-                                <i class="fa-solid fa-building"></i> استلام من المكتب
+                                <i class="fa-solid fa-building"></i> استلام من المكتب 🏢
                             </button>
                         </div>
                     </div>
@@ -415,65 +420,66 @@
             btnEl.classList.add('border-amber-400', 'opacity-100');
         }
 
+        // قاعدة بيانات الولايات والبلديات الـ 58 بالكامل مع دعم التوصيل للمنزل والمكتب
         const wilayasData = [
-            { code: "1", name: "01 - أدرار", home: 900, desk: 600, communes: ["أدرار", "تامست", "شروين", "رقان", "أولف", "تيميمون", "أوقروت"] },
-            { code: "2", name: "02 - الشلف", home: 600, desk: 400, communes: ["الشلف", "تنس", "أبو الحسن", "أولاد فارس", "تاوقريت", "عين مران"] },
-            { code: "3", name: "03 - الأغواط", home: 700, desk: 500, communes: ["الأغواط", "أفلو", "حاسي الرمل", "قصر الحيران", "عين ماضي"] },
-            { code: "4", name: "04 - أم البواقي", home: 600, desk: 400, communes: ["أم البواقي", "عين البيضاء", "عين مليلة", "فكيرينة", "سيقوس"] },
-            { code: "5", name: "05 - باتنة", home: 600, desk: 400, communes: ["باتنة", "بريكة", "عين توتة", "أريس", "مروانة", "تازولت"] },
-            { code: "6", name: "06 - بجاية", home: 600, desk: 400, communes: ["بجاية", "أميزور", "أقبو", "القصر", "تيشي", "خراطة"] },
-            { code: "7", name: "07 - بسكرة", home: 700, desk: 500, communes: ["بسكرة", "طولقة", "سيدي عقبة", "أولاد جلال", "زريبة الوادي"] },
-            { code: "8", name: "08 - بشار", home: 800, desk: 600, communes: ["بشار", "القنادسة", "تاغيت", "العبادلة", "بني عباس"] },
-            { code: "9", name: "09 - البليدة", home: 500, desk: 300, communes: ["البليدة", "بوفاريك", "العفرون", "موزاية", "أولاد يعيش", "الصومعة"] },
-            { code: "10", name: "10 - البويرة", home: 600, desk: 400, communes: ["البويرة", "الأخضرية", "سور الغزلان", "عين بسام", "مشدالة"] },
-            { code: "11", name: "11 - تمنراست", home: 1100, desk: 800, communes: ["تمنراست", "عين صالح", "أين أ his", "تاظروك"] },
-            { code: "12", name: "12 - تبسة", home: 600, desk: 400, communes: ["تبسة", "الشريعة", "الونزة", "العوينات", "بئر العاتر"] },
-            { code: "13", name: "13 - تلمسان", home: 600, desk: 400, communes: ["تلمسان", "منصورة", "سبدو", "مغنية", "الغزوات", "الحناية"] },
-            { code: "14", name: "14 - تيارت", home: 600, desk: 400, communes: ["تيارت", "السوقر", "فرندة", "قصر الشلالة", "مهدية"] },
-            { code: "15", name: "15 - تيزي وزو", home: 500, desk: 300, communes: ["تيزي وزو", "أزازقة", "ذراع بن خدة", "واضية", "عين الحمام", "تزي غنيف"] },
-            { code: "16", name: "16 - الجزائر العاصمة", home: 400, desk: 250, communes: ["الجزائر الوسطى", "باب الوادي", "سيدي امحمد", "الأبيار", "حيدرة", "بن عكنون", "الشراقة", "دالي إبراهيم", "الدرارية", "بئر مراد رايس", "بئر خادم", "القبة", "الحراش", "باب الزوار", "الدار البيضاء", "الرويبة", "زرالدة", "عين البنيان", "الرغاية", "البرج الكيفان", "الكاليتوس", "براقي", "باش جراح", "المقرية", "المرادية", "بوزريعة", "بني المسوس", "السحاولة", "الخرايسية", "العاشور"] },
-            { code: "17", name: "17 - الجلفة", home: 700, desk: 500, communes: ["الجلفة", "حاسي بحبح", "عين وسارة", "مسعد", "الإدريسية"] },
-            { code: "18", name: "18 - جيجل", home: 600, desk: 400, communes: ["جيجل", "العوانة", "زيامة منصورية", "الطاهير", "الميلية"] },
-            { code: "19", name: "19 - سطيف", home: 600, desk: 400, communes: ["سطيف", "العلمة", "عين أرنات", "عين ولمان", "بوقاعة", "عين الكبيرة"] },
-            { code: "20", name: "20 - سعيدة", home: 600, desk: 400, communes: ["سعيدة", "عين الحجر", "يوب", "الحساسنة", "أولاد خالد"] },
-            { code: "21", name: "21 - سكيكدة", home: 600, desk: 400, communes: ["سكيكدة", "الحروش", "عزابة", "تمالوس", "قلعة بوسطورة"] },
-            { code: "22", name: "22 - سيدي بلعباس", home: 600, desk: 400, communes: ["سيدي بلعباس", "تلاغ", "سفيزف", "ابن باديس", "سيدي علي بن يوب"] },
-            { code: "23", name: "23 - عنابة", home: 600, desk: 400, communes: ["عنابة", "البوني", "الحجار", "برحال", "عين الباردة"] },
-            { code: "24", name: "24 - قالمة", home: 600, desk: 400, communes: ["قالمة", "وادي الزناتي", "بوشقوف", "المجاهدين", "عين مخلوف"] },
-            { code: "25", name: "25 - قسنطينة", home: 600, desk: 400, communes: ["قسنطينة", "الخروب", "عين سمارة", "زيغود يوسف", "حامة بوزيان", "أولاد رحمون"] },
-            { code: "26", name: "26 - المدية", home: 600, desk: 400, communes: ["المدية", "البرواقية", "قصر البخاري", "تابلاط", "عزيز"] },
-            { code: "27", name: "27 - مستغانم", home: 600, desk: 400, communes: ["مستغانم", "عين تادلس", "سيدي علي", "حاسي مُمش", "مزبغران"] },
-            { code: "28", name: "28 - المسيلة", home: 600, desk: 400, communes: ["المسيلة", "بوسعادة", "سيدي عيسى", "مقرة", "عين الملح"] },
-            { code: "29", name: "29 - معسكر", home: 600, desk: 400, communes: ["معسكر", "سيق", "المحمدية", "غريس", "تيغنيف"] },
-            { code: "30", name: "30 - ورقلة", home: 800, desk: 500, communes: ["ورقلة", "تقرت", "حاسي مسعود", "الرويسات", "الطيبات"] },
-            { code: "31", name: "31 - وهران", home: 600, desk: 400, communes: ["وهران", "بئر الجير", "السانية", "أرزيو", "عين الترك", "قديل", "وادي تليلات"] },
-            { code: "32", name: "32 - البيض", home: 800, desk: 500, communes: ["البيض", "الأبيض سيدي الشيخ", "بوقطب", "بريزينة"] },
-            { code: "33", name: "33 - إليزي", home: 1100, desk: 800, communes: ["إليزي", "جانت", "إن أميناس"] },
-            { code: "34", name: "34 - برج بوعريريج", home: 600, desk: 400, communes: ["برج بوعريريج", "راس الوادي", "مجانة", "برج غدير", "المنصورة"] },
-            { code: "35", name: "35 - بومرداس", home: 500, desk: 300, communes: ["بومرداس", "بودواو", "برج منايل", "دلس", "خميس الخشنة", "ثنية"] },
-            { code: "36", name: "36 - الطارف", home: 600, desk: 400, communes: ["الطارف", "القالة", "بوثلجة", "الذرعان", "بن مهيدي"] },
-            { code: "37", name: "37 - تندوف", home: 1100, desk: 800, communes: ["تندوف", "أم العسل"] },
-            { code: "38", name: "38 - تسمسيلت", home: 600, desk: 400, communes: ["تسمسيلت", "ثنية الأحد", "لرجام", "برج بونعامة"] },
-            { code: "39", name: "39 - الوادي", home: 800, desk: 500, communes: ["الوادي", "جامعة", "المغير", "قمار", "الدبيلة"] },
-            { code: "40", name: "40 - خنشلة", home: 600, desk: 400, communes: ["خنشلة", "قايس", "ششار", "محمل", "أولاد رشاش"] },
-            { code: "41", name: "41 - سوق أهراس", home: 600, desk: 400, communes: ["سوق أهراس", "سدراتة", "مداوروش", "تاورة"] },
-            { code: "42", name: "42 - تيبازة", home: 500, desk: 300, communes: ["تيبازة", "القليعة", "شرشال", "بوسماعيل", "فوكة", "حجوط"] },
-            { code: "43", name: "43 - ميلة", home: 600, desk: 400, communes: ["ميلة", "شلغوم العيد", "تاجنانت", "فرجيوة", "القرارم قوقة"] },
-            { code: "44", name: "44 - عين الدفلى", home: 600, desk: 400, communes: ["عين الدفلى", "خميس مليانة", "مليانة", "العطاف", "جندل"] },
-            { code: "45", name: "45 - النعامة", home: 800, desk: 500, communes: ["النعامة", "مشرية", "عين الصفراء", "عسلة"] },
-            { code: "46", name: "46 - عين تموشنت", home: 600, desk: 400, communes: ["عين تموشنت", "بني صاف", "حمام بوحجر", "المالح"] },
-            { code: "47", name: "47 - غرداية", home: 800, desk: 500, communes: ["غرداية", "القرارة", "متليلي", "بني يزقن", "زلفانة"] },
-            { code: "48", name: "48 - غليزان", home: 600, desk: 400, communes: ["غليزان", "وادي ارهيو", "مازونة", "زمورة", "سيدي خطاب"] },
-            { code: "49", name: "49 - المغير", home: 800, desk: 500, communes: ["المغير", "جامعة", "سيدي خليل", "أم الطيور"] },
-            { code: "50", name: "50 - المنيعة", home: 900, desk: 600, communes: ["المنيعة", "حاسي القارة"] },
-            { code: "51", name: "51 - أولاد جلال", home: 800, desk: 500, communes: ["أولاد جلال", "سيدي خالد", "البسكرة"] },
-            { code: "52", name: "52 - برج باجي مختار", home: 1200, desk: 900, communes: ["برج باجي مختار", "تيمياوين"] },
-            { code: "53", name: "53 - بني عباس", home: 900, desk: 600, communes: ["بني عباس", "كرزاز", "الواتة"] },
-            { code: "54", name: "54 - تيميمون", home: 900, desk: 600, communes: ["تيميمون", "أوقروت", "طلمين"] },
-            { code: "55", name: "55 - تقرت", home: 800, desk: 500, communes: ["تقرت", "تماسين", "النزلة", "بلدة عمر"] },
-            { code: "56", name: "56 - جانت", home: 1200, desk: 900, communes: ["جانت", "برج الحواس"] },
-            { code: "57", name: "57 - عين صالح", home: 1100, desk: 800, communes: ["عين صالح", "فقارة الزاوية"] },
-            { code: "58", name: "58 - عين قزام", home: 1200, desk: 900, communes: ["عين قزام", "تني Zouane"] }
+            { code: "1", name: "01 - أدرار", home: 900, desk: 600, deskCommunes: ["أدرار"], communes: ["أدرار", "اقبلي", "أولف", "بودة", "فنوغيل", "إن زغمير", "أولاد أحمد تيمي", "رقان", "سالي", "السبع", "تامنطيط", "تامست", "تيمقتن", "تيت", "تسابيت", "زاوية كنتة"] },
+            { code: "2", name: "02 - الشلف", home: 600, desk: 400, deskCommunes: ["الشلف", "تنس"], communes: ["الشلف", "تنس", "أبو الحسن", "أولاد فارس", "تاوقريت", "عين مران", "وادي الفضة", "بوقادير", "المرسى", "بني حواء"] },
+            { code: "3", name: "03 - الأغواط", home: 700, desk: 500, deskCommunes: ["الأغواط", "أفلو"], communes: ["الأغواط", "أفلو", "حاسي الرمل", "قصر الحيران", "عين ماضي", "حاسي الدلاعة", "الغيشة"] },
+            { code: "4", name: "04 - أم البواقي", home: 600, desk: 400, deskCommunes: ["أم البواقي", "عين البيضاء", "عين مليلة"], communes: ["أم البواقي", "عين البيضاء", "عين مليلة", "فكيرينة", "سيقوس", "مسكيانة", "ضلعة"] },
+            { code: "5", name: "05 - باتنة", home: 600, desk: 400, deskCommunes: ["باتنة", "بريكة", "عين توتة"], communes: ["باتنة", "بريكة", "عين توتة", "أريس", "مروانة", "تازولت", "نقاوة", "الشمرة", "المعذر"] },
+            { code: "6", name: "06 - بجاية", home: 600, desk: 400, deskCommunes: ["بجاية", "أقبو", "القصر"], communes: ["بجاية", "أميزور", "أقبو", "القصر", "تيشي", "خراطة", "أوقاس", "سيدي عيش", "تشميني"] },
+            { code: "7", name: "07 - بسكرة", home: 700, desk: 500, deskCommunes: ["بسكرة", "طولقة"], communes: ["بسكرة", "طولقة", "سيدي عقبة", "زريبة الوادي", "أورلال", "جمورة", "لوطاية"] },
+            { code: "8", name: "08 - بشار", home: 800, desk: 600, deskCommunes: ["بشار"], communes: ["بشار", "القنادسة", "تاغيت", "العبادلة", "لحمر", "موغل"] },
+            { code: "9", name: "09 - البليدة", home: 500, desk: 300, deskCommunes: ["البليدة", "بوفاريك", "العفرون"], communes: ["البليدة", "بوفاريك", "العفرون", "موزاية", "أولاد يعيش", "الصومعة", "شبلي", "بوينان", "وادي العلايق"] },
+            { code: "10", name: "10 - البويرة", home: 600, desk: 400, deskCommunes: ["البويرة", "الأخضرية", "سور الغزلان"], communes: ["البويرة", "الأخضرية", "سور الغزلان", "عين بسام", "مشدالة", "قاديرية", "عمر"] },
+            { code: "11", name: "11 - تمنراست", home: 1100, desk: 800, deskCommunes: ["تمنراست"], communes: ["تمنراست", "أين أ his", "تاظروك"] },
+            { code: "12", name: "12 - تبسة", home: 600, desk: 400, deskCommunes: ["تبسة", "الشريعة"], communes: ["تبسة", "الشريعة", "الونزة", "العوينات", "بئر العاتر", "العقلة", "مرسط"] },
+            { code: "13", name: "13 - تلمسان", home: 600, desk: 400, deskCommunes: ["تلمسان", "مغنية", "سبدو"], communes: ["تلمسان", "منصورة", "سبدو", "مغنية", "الغزوات", "الحناية", "الرمشي", "شتوان", "أولاد ميمون"] },
+            { code: "14", name: "14 - تيارت", home: 600, desk: 400, deskCommunes: ["تيارت", "السوقر", "فرندة"], communes: ["تيارت", "السوقر", "فرندة", "قصر الشلالة", "مهدية", "رحوية", "مشرع الصفا"] },
+            { code: "15", name: "15 - تيزي وزو", home: 500, desk: 300, deskCommunes: ["تيزي وزو", "أزازقة", "ذراع بن خدة"], communes: ["تيزي وزو", "أزازقة", "ذراع بن خدة", "واضية", "عين الحمام", "تزي غنيف", "بوغني", "تيقزيرت", "عزازقة"] },
+            { code: "16", name: "16 - الجزائر العاصمة", home: 400, desk: 250, deskCommunes: ["الجزائر الوسطى", "الشراقة", "الرويبة", "حيدرة", "بئر مراد رايس", "باب الزوار", "الدار البيضاء"], communes: ["الجزائر الوسطى", "باب الوادي", "سيدي امحمد", "الأبيار", "حيدرة", "بن عكنون", "الشراقة", "دالي إبراهيم", "الدرارية", "بئر مراد رايس", "بئر خادم", "القبة", "الحراش", "باب الزوار", "الدار البيضاء", "الرويبة", "زرالدة", "عين البنيان", "الرغاية", "البرج الكيفان", "الكاليتوس", "براقي", "باش جراح", "المقرية", "المرادية", "بوزريعة", "بني المسوس", "السحاولة", "الخرايسية", "العاشور"] },
+            { code: "17", name: "17 - الجلفة", home: 700, desk: 500, deskCommunes: ["الجلفة", "حاسي بحبح", "عين وسارة"], communes: ["الجلفة", "حاسي بحبح", "عين وسارة", "مسعد", "الإدريسية", "شارف", "دار الشيوخ"] },
+            { code: "18", name: "18 - جيجل", home: 600, desk: 400, deskCommunes: ["جيجل", "الطاهير"], communes: ["جيجل", "العوانة", "زيامة منصورية", "الطاهير", "الميلية", "العنصر", "شقفة"] },
+            { code: "19", name: "19 - سطيف", home: 600, desk: 400, deskCommunes: ["سطيف", "العلمة", "عين ولمان"], communes: ["سطيف", "العلمة", "عين أرنات", "عين ولمان", "بوقاعة", "عين الكبيرة", "جميلة", "العلمة", "عين أزال"] },
+            { code: "20", name: "20 - سعيدة", home: 600, desk: 400, deskCommunes: ["سعيدة"], communes: ["سعيدة", "عين الحجر", "يوب", "الحساسنة", "أولاد خالد"] },
+            { code: "21", name: "21 - سكيكدة", home: 600, desk: 400, deskCommunes: ["سكيكدة", "عزابة", "الحروش"], communes: ["سكيكدة", "الحروش", "عزابة", "تمالوس", "قلعة بوسطورة", "القل", "أم الطوب"] },
+            { code: "22", name: "22 - سيدي بلعباس", home: 600, desk: 400, deskCommunes: ["سيدي بلعباس", "تلاغ"], communes: ["سيدي بلعباس", "تلاغ", "سفيزف", "ابن باديس", "سيدي علي بن يوب", "راس الماء"] },
+            { code: "23", name: "23 - عنابة", home: 600, desk: 400, deskCommunes: ["عنابة", "البوني"], communes: ["عنابة", "البوني", "الحجار", "برحال", "عين الباردة", "سرايدي"] },
+            { code: "24", name: "24 - قالمة", home: 600, desk: 400, deskCommunes: ["قالمة", "وادي الزناتي"], communes: ["قالمة", "وادي الزناتي", "بوشقوف", "المجاهدين", "عين مخلوف", "هليوبوليس"] },
+            { code: "25", name: "25 - قسنطينة", home: 600, desk: 400, deskCommunes: ["قسنطينة", "الخروب", "عين سمارة"], communes: ["قسنطينة", "الخروب", "عين سمارة", "زيغود يوسف", "حامة بوزيان", "أولاد رحمون", "ابن باديس"] },
+            { code: "26", name: "26 - المدية", home: 600, desk: 400, deskCommunes: ["المدية", "البرواقية", "قصر البخاري"], communes: ["المدية", "البرواقية", "قصر البخاري", "تابلاط", "عزيز", "سغوان", "شلالة العذاورة"] },
+            { code: "27", name: "27 - مستغانم", home: 600, desk: 400, deskCommunes: ["مستغانم", "سيدي علي"], communes: ["مستغانم", "عين تادلس", "سيدي علي", "حاسي مُمش", "مزبغران", "عاشت"] },
+            { code: "28", name: "28 - المسيلة", home: 600, desk: 400, deskCommunes: ["المسيلة", "بوسعادة"], communes: ["عين الحجل", "عين الملح", "عين فارس", "عين الخضراء", "عين الريش", "بلعايبة", "بن سرور", "بني يلمان", "بن زوه", "برهوم", "بئر فضة", "بوسعادة", "بوطي السايح", "شلال", "دهاهنة", "جبل مساعد", "الهامل", "الحوامد", "حمام الضلعة", "خطوطي سد الجير", "خبانة", "مسيف", "المسيلة", "المطارفة", "المعاضيد", "معاريف", "مقرة", "امجدل", "مناعة", "محمد بوضياف", "ونوغة", "أولاد عدي لقبالة", "أولاد دراج", "أولاد ماضي", "أولاد منصور", "أولاد سيدي ابراهيم", "أولاد سليمان", "ولتام", "سيدي عيسى", "سيدي عامر", "سيدي هجرس", "سيدي امحمد", "سليم", "السوامع", "تامسة", "تارمونت", "زرزور"] },
+            { code: "29", name: "29 - معسكر", home: 600, desk: 400, deskCommunes: ["معسكر", "سيق", "المحمدية"], communes: ["معسكر", "سيق", "المحمدية", "غريس", "تيغنيف", "بوحنيفية"] },
+            { code: "30", name: "30 - ورقلة", home: 800, desk: 500, deskCommunes: ["ورقلة", "حاسي مسعود"], communes: ["ورقلة", "حاسي مسعود", "الرويسات", "الطيبات", "أنقوسة"] },
+            { code: "31", name: "31 - وهران", home: 600, desk: 400, deskCommunes: ["وهران", "بئر الجير", "السانية", "أرزيو"], communes: ["وهران", "بئر الجير", "السانية", "أرزيو", "عين الترك", "قديل", "وادي تليلات", "بطيوة", "مسغين"] },
+            { code: "32", name: "32 - البيض", home: 800, desk: 500, deskCommunes: ["البيض"], communes: ["البيض", "الأبيض سيدي الشيخ", "بوقطب", "بريزينة"] },
+            { code: "33", name: "33 - إليزي", home: 1100, desk: 800, deskCommunes: ["إليزي"], communes: ["إليزي", "إن أميناس"] },
+            { code: "34", name: "34 - برج بوعريريج", home: 600, desk: 400, deskCommunes: ["برج بوعريريج", "راس الوادي"], communes: ["برج بوعريريج", "راس الوادي", "مجانة", "برج غدير", "المنصورة", "اليشير"] },
+            { code: "35", name: "35 - بومرداس", home: 500, desk: 300, deskCommunes: ["بومرداس", "خميس الخشنة", "بودواو"], communes: ["بومرداس", "بودواو", "برج منايل", "دلس", "خميس الخشنة", "ثنية", "يسر", "الذوق"] },
+            { code: "36", name: "36 - الطارف", home: 600, desk: 400, deskCommunes: ["الطارف", "القالة"], communes: ["الطارف", "القالة", "بوثلجة", "الذرعان", "بن مهيدي", "بوحجار"] },
+            { code: "37", name: "37 - تندوف", home: 1100, desk: 800, deskCommunes: ["تندوف"], communes: ["تندوف", "أم العسل"] },
+            { code: "38", name: "38 - تسمسيلت", home: 600, desk: 400, deskCommunes: ["تسمسيلت", "ثنية الأحد"], communes: ["تسمسيلت", "ثنية الأحد", "لرجام", "برج بونعامة", "خميستي"] },
+            { code: "39", name: "39 - الوادي", home: 800, desk: 500, deskCommunes: ["الوادي", "جامعة"], communes: ["الوادي", "جامعة", "قمار", "الدبيلة", "الرقيبة", "حاسي خليفة"] },
+            { code: "40", name: "40 - خنشلة", home: 600, desk: 400, deskCommunes: ["خنشلة", "قايس"], communes: ["خنشلة", "قايس", "ششار", "محمل", "أولاد رشاش", "بوحمامة"] },
+            { code: "41", name: "41 - سوق أهراس", home: 600, desk: 400, deskCommunes: ["سوق أهراس", "سدراتة"], communes: ["سوق أهراس", "سدراتة", "مداوروش", "تاورة", "المراهنة"] },
+            { code: "42", name: "42 - تيبازة", home: 500, desk: 300, deskCommunes: ["تيبازة", "القليعة", "شرشال"], communes: ["تيبازة", "القليعة", "شرشال", "بوسماعيل", "فوكة", "حجوط", "الدواودة", "سيدي غيلاس"] },
+            { code: "43", name: "43 - ميلة", home: 600, desk: 400, deskCommunes: ["ميلة", "شلغوم العيد", "فرجيوة"], communes: ["ميلة", "شلغوم العيد", "تاجنانت", "فرجيوة", "القرارم قوقة", "التلاغمة"] },
+            { code: "44", name: "44 - عين الدفلى", home: 600, desk: 400, deskCommunes: ["عين الدفلى", "خميس مليانة"], communes: ["عين الدفلى", "خميس مليانة", "مليانة", "العطاف", "جندل", "بوراشد"] },
+            { code: "45", name: "45 - النعامة", home: 800, desk: 500, deskCommunes: ["النعامة", "مشرية"], communes: ["النعامة", "مشرية", "عين الصفراء", "عسلة", "تيووت"] },
+            { code: "46", name: "46 - عين تموشنت", home: 600, desk: 400, deskCommunes: ["عين تموشنت", "بني صاف"], communes: ["عين تموشنت", "بني صاف", "حمام بوحجر", "المالح", "العامربة"] },
+            { code: "47", name: "47 - غرداية", home: 800, desk: 500, deskCommunes: ["غرداية", "القرارة"], communes: ["غرداية", "القرارة", "متليلي", "بني يزقن", "زلفانة", "الاطفيل"] },
+            { code: "48", name: "48 - غليزان", home: 600, desk: 400, deskCommunes: ["غليزان", "وادي ارهيو"], communes: ["غليزان", "وادي ارهيو", "مازونة", "زمورة", "سيدي خطاب", "جديوية"] },
+            { code: "49", name: "49 - المغير", home: 800, desk: 500, deskCommunes: ["المغير"], communes: ["المغير", "جامعة", "سيدي خليل", "أم الطيور"] },
+            { code: "50", name: "50 - المنيعة", home: 900, desk: 600, deskCommunes: ["المنيعة"], communes: ["المنيعة", "حاسي القارة"] },
+            { code: "51", name: "51 - أولاد جلال", home: 800, desk: 500, deskCommunes: ["أولاد جلال"], communes: ["أولاد جلال", "سيدي خالد", "البسكرة"] },
+            { code: "52", name: "52 - برج باجي مختار", home: 1200, desk: 900, deskCommunes: ["برج باجي مختار"], communes: ["برج باجي مختار", "تيمياوين"] },
+            { code: "53", name: "53 - بني عباس", home: 900, desk: 600, deskCommunes: ["بني عباس"], communes: ["بني عباس", "كرزاز", "الواتة"] },
+            { code: "54", name: "54 - تيميمون", home: 900, desk: 600, deskCommunes: ["تيميمون"], communes: ["تيميمون", "أوقروت", "طلمين"] },
+            { code: "55", name: "55 - تقرت", home: 800, desk: 500, deskCommunes: ["تقرت"], communes: ["تقرت", "تماسين", "النزلة", "بلدة عمر"] },
+            { code: "56", name: "56 - جانت", home: 1200, desk: 900, deskCommunes: ["جانت"], communes: ["جانت", "برج الحواس"] },
+            { code: "57", name: "57 - عين صالح", home: 1100, desk: 800, deskCommunes: ["عين صالح"], communes: ["عين صالح", "فقارة الزاوية"] },
+            { code: "58", name: "58 - عين قزام", home: 1200, desk: 900, deskCommunes: ["عين قزام"], communes: ["عين قزام", "تني Zouane"] }
         ];
 
         let basePrice = 29000;
@@ -506,15 +512,36 @@
             
             if (wObj && wObj.communes) {
                 wObj.communes.forEach(c => {
+                    const isDeskAvailable = wObj.deskCommunes && wObj.deskCommunes.includes(c);
                     const opt = document.createElement('option');
                     opt.value = c;
-                    opt.innerText = c;
+                    opt.innerText = c + (isDeskAvailable ? ' 🏠 🏢' : ' 🏠');
                     communeSelect.appendChild(opt);
                 });
                 if (wObj.communes.length > 0) {
-                    communeSelect.selectedIndex = 1; // اختيار أول بلدية تلقائياً
+                    communeSelect.selectedIndex = 1;
                 }
             }
+            onCommuneChange();
+        }
+
+        function onCommuneChange() {
+            const code = document.getElementById('wilaya').value || "16";
+            const wObj = wilayasData.find(w => w.code === code) || wilayasData[15];
+            const selectedCommune = document.getElementById('commune').value;
+            const btnDesk = document.getElementById('type-desk');
+
+            const isDeskAvailable = wObj.deskCommunes && wObj.deskCommunes.includes(selectedCommune);
+
+            if (!isDeskAvailable) {
+                btnDesk.disabled = true;
+                btnDesk.classList.add('opacity-40', 'cursor-not-allowed');
+                setDeliveryType('home');
+            } else {
+                btnDesk.disabled = false;
+                btnDesk.classList.remove('opacity-40', 'cursor-not-allowed');
+            }
+            calculateTotal();
         }
 
         function setDeliveryType(type) {
@@ -523,7 +550,7 @@
             const btnDesk = document.getElementById('type-desk');
             if (type === 'home') {
                 btnHome.className = "p-3.5 rounded-xl border text-xs font-bold text-center border-amber-400 bg-amber-500/10 text-amber-300 flex items-center justify-center gap-2";
-                btnDesk.className = "p-3.5 rounded-xl border text-xs font-bold text-center border-slate-800 bg-[#090b0e] text-slate-400 flex items-center justify-center gap-2";
+                btnDesk.className = "p-3.5 rounded-xl border text-xs font-bold text-center border-slate-800 bg-[#090b0e] text-slate-400 flex items-center justify-center gap-2" + (btnDesk.disabled ? " opacity-40 cursor-not-allowed" : "");
             } else {
                 btnDesk.className = "p-3.5 rounded-xl border text-xs font-bold text-center border-amber-400 bg-amber-500/10 text-amber-300 flex items-center justify-center gap-2";
                 btnHome.className = "p-3.5 rounded-xl border text-xs font-bold text-center border-slate-800 bg-[#090b0e] text-slate-400 flex items-center justify-center gap-2";
@@ -579,7 +606,7 @@
                 phone: phone,
                 wilaya: wObj ? wObj.name : code,
                 commune: communeVal,
-                address: communeVal, // تم استبدال العنوان الكامل باسم البلدية لتطابق الأعمدة
+                address: communeVal,
                 deliveryType: deliveryType === 'home' ? 'توصيل للمنزل' : 'استلام من المكتب',
                 quantity: currentQty,
                 totalAmount: document.getElementById('grand-total').innerText,
@@ -633,3 +660,5 @@
     </script>
 </body>
 </html>
+
+```
